@@ -1,20 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Books from './components/books.component';
+import Chapters from './components/chapters.component';
+import Verses from './components/verses.component';
 
-export default function App() {
+const App = () => {
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedChapter, setSelectedChapter] = useState(null);
+
+  const handleSelectBook = (bookAbbrev) => {
+    setSelectedBook(bookAbbrev);
+    setSelectedChapter(null);
+  };
+
+  const handleSelectChapter = (chapter) => {
+    setSelectedChapter(chapter);
+  };
+
+  const handleBackToBooks = () => {
+    setSelectedBook(null);
+  };
+
+  const handleBackToChapters = () => {
+    setSelectedChapter(null);
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {!selectedBook && <Books onSelectBook={handleSelectBook} />}
+      {selectedBook && !selectedChapter && (
+        <Chapters bookAbbrev={selectedBook} onSelectChapter={handleSelectChapter} onBack={handleBackToBooks} />
+      )}
+      {selectedBook && selectedChapter && (
+        <Verses version="nvi" bookAbbrev={selectedBook} chapter={selectedChapter} onBack={handleBackToChapters} />
+      )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
   },
 });
+
+export default App;
