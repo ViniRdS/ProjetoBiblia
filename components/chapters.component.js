@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Button, StyleSheet } from 'react-native';
 import { getChapters } from '../services/biblia.service';
+import { useError } from '../contexts/ErrorContext';
 
 const Chapters = ({ bookAbbrev, onSelectChapter, onBack }) => {
   const [chapters, setChapters] = useState([]);
@@ -20,10 +21,11 @@ const Chapters = ({ bookAbbrev, onSelectChapter, onBack }) => {
         data={chapters}
         keyExtractor={(item) => item.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => onSelectChapter(item)}>
-            <Text style={styles.item}>Capítulo {item}</Text>
+          <TouchableOpacity onPress={() => onSelectChapter(item)} style={styles.item}>
+            <Text style={styles.itemText}>Capítulo {item}</Text>
           </TouchableOpacity>
         )}
+        contentContainerStyle={styles.centeredList}
       />
     </View>
   );
@@ -35,9 +37,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
-    padding: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  itemText: {
     fontSize: 18,
-    height: 44,
+  },
+  centeredList: {
+    alignItems: 'center',
   },
 });
 

@@ -23,8 +23,8 @@ const Books = ({ onSelectBook }) => {
   };
 
   const renderBookItem = ({ item }) => (
-    <TouchableOpacity onPress={() => onSelectBook(item.abbrev.pt)}>
-      <Text style={styles.item}>{item.name}</Text>
+    <TouchableOpacity onPress={() => onSelectBook(item.abbrev.pt)} style={styles.item}>
+      <Text style={styles.itemText}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -32,6 +32,7 @@ const Books = ({ onSelectBook }) => {
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         <Button title="Antigo Testamento" onPress={() => handleTestamentSelect('VT')} />
+        <View style={styles.buttonSpacer} /> 
         <Button title="Novo Testamento" onPress={() => handleTestamentSelect('NT')} />
       </View>
       {selectedTestament && (
@@ -39,7 +40,13 @@ const Books = ({ onSelectBook }) => {
           data={filterBooksByTestament(selectedTestament)}
           keyExtractor={(item) => item.abbrev.pt}
           renderItem={renderBookItem}
+          contentContainerStyle={styles.instructionsContainer}
         />
+      )}
+      {!selectedTestament && (
+        <View style={styles.instructionsContainer}>
+          <Text style={styles.instructionsText}>Selecione um livro para começar a leitura.</Text>
+        </View>
       )}
     </View>
   );
@@ -52,13 +59,27 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginBottom: 10,
   },
+  buttonSpacer: {
+    width: 10,
+  },
   item: {
-    padding: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  itemText: {
     fontSize: 18,
-    height: 44,
+  },
+  instructionsContainer: {
+    backgroundColor: '#e3e3e3',
+    padding: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  instructionsText: {
+    fontSize: 16,
   },
 });
 
