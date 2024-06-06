@@ -16,7 +16,7 @@ const Books = ({ onSelectBook }) => {
         const data = await getBooks();
         setBooks(data);
       } catch (error) {
-        setError('Falha ao buscar livros. Tente novamente mais tarde.');
+        setError('Falha ao buscar livros. A API atingiu o seu limite. Tente novamente mais tarde.');
       } finally {
         setLoading(false);
       }
@@ -57,7 +57,7 @@ const Books = ({ onSelectBook }) => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <Button title="Antigo Testamento" onPress={() => handleTestamentSelect('VT')} />
+        <Button title="Velho Testamento" onPress={() => handleTestamentSelect('VT')} />
         <View style={styles.buttonSpacer} />
         <Button title="Novo Testamento" onPress={() => handleTestamentSelect('NT')} />
       </View>

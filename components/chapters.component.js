@@ -15,7 +15,7 @@ const Chapters = ({ bookAbbrev, onSelectChapter, onBack }) => {
         const data = await getChapters(bookAbbrev);
         setChapters(Array.from({ length: data }, (_, i) => i + 1));
       } catch (error) {
-        setError('Falha ao buscar capítulos. Tente novamente mais tarde.');
+        setError('Falha ao buscar capítulos. A API atingiu o seu limite. Tente novamente mais tarde.');
       } finally {
         setLoading(false);
       }

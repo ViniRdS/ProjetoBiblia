@@ -15,7 +15,7 @@ const Verses = ({ version, bookName, bookAbbrev, chapter, lastChapter, onBack, o
         const data = await getVerses(version, bookAbbrev, chapter);
         setVerses(data);
       } catch (error) {
-        setError('Falha ao buscar versículos. Tente novamente mais tarde.');
+        setError('Falha ao buscar versículos. A API atingiu o seu limite. Tente novamente mais tarde.');
       } finally {
         setLoading(false);
       }

@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
-export const getBookDetails = async (abbrev) => {
+const getBookDetails = async (abbrev) => {
   try {
     const response = await api.get(`/books/${abbrev}`);
     return response.data;
@@ -16,7 +16,7 @@ export const getBookDetails = async (abbrev) => {
   }
 };
 
-export const getBooks = async () => {
+const getBooks = async () => {
   try {
     const response = await api.get('/books');
     return response.data;
@@ -26,7 +26,7 @@ export const getBooks = async () => {
   }
 };
 
-export const getChapters = async (bookAbbrev) => {
+const getChapters = async (bookAbbrev) => {
   try {
     const response = await api.get(`/books/${bookAbbrev}`);
     return response.data.chapters;
@@ -36,7 +36,7 @@ export const getChapters = async (bookAbbrev) => {
   }
 };
 
-export const getVerses = async (version, bookAbbrev, chapter) => {
+const getVerses = async (version, bookAbbrev, chapter) => {
   try {
     const response = await api.get(`/verses/${version}/${bookAbbrev}/${chapter}`);
     return response.data.verses;
@@ -45,3 +45,5 @@ export const getVerses = async (version, bookAbbrev, chapter) => {
     throw new Error('Failed to fetch verses');
   }
 };
+
+export {getBookDetails, getBooks, getChapters, getVerses};
