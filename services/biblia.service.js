@@ -2,27 +2,46 @@ import axios from 'axios';
 
 const API_URL = 'https://www.abibliadigital.com.br/api';
 
+const api = axios.create({
+  baseURL: API_URL,
+});
+
 export const getBookDetails = async (abbrev) => {
   try {
-    const response = await axios.get(`${API_URL}/books/${abbrev}`);
+    const response = await api.get(`/books/${abbrev}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching book details:', error);
-    throw error;
+    console.error(`Error fetching book details for ${abbrev}:`, error);
+    throw new Error('Failed to fetch book details');
   }
 };
 
 export const getBooks = async () => {
-  const response = await axios.get(`${API_URL}/books`);
-  return response.data;
+  try {
+    const response = await api.get('/books');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    throw new Error('Failed to fetch books');
+  }
 };
 
 export const getChapters = async (bookAbbrev) => {
-  const response = await axios.get(`${API_URL}/books/${bookAbbrev}`);
-  return response.data.chapters;
+  try {
+    const response = await api.get(`/books/${bookAbbrev}`);
+    return response.data.chapters;
+  } catch (error) {
+    console.error(`Error fetching chapters for ${bookAbbrev}:`, error);
+    throw new Error('Failed to fetch chapters');
+  }
 };
 
 export const getVerses = async (version, bookAbbrev, chapter) => {
-  const response = await axios.get(`${API_URL}/verses/${version}/${bookAbbrev}/${chapter}`);
-  return response.data.verses;
+  try {
+    const response = await api.get(`/verses/${version}/${bookAbbrev}/${chapter}`);
+    return response.data.verses;
+  } catch (error) {
+    console.error(`Error fetching verses for ${version}/${bookAbbrev}/${chapter}:`, error);
+    throw new Error('Failed to fetch verses');
+  }
 };

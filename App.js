@@ -7,16 +7,16 @@ import { getBookDetails } from './services/biblia.service';
 
 export default function App() {
   const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBookName, setSelectedBookName] = useState('');
   const [selectedChapter, setSelectedChapter] = useState(null);
   const [chapterCount, setChapterCount] = useState(0);
 
   const handleSelectBook = async (bookAbbrev) => {
     setSelectedBook(bookAbbrev);
-    setSelectedChapter(1); // Começar do capítulo 1 quando um livro é selecionado
 
-    // Fetch the chapter count from the API
     const bookDetails = await getBookDetails(bookAbbrev);
     setChapterCount(bookDetails.chapters);
+    setSelectedBookName(bookDetails.name);
   };
 
   const handleSelectChapter = (chapter) => {
@@ -25,6 +25,7 @@ export default function App() {
 
   const handleBackToBooks = () => {
     setSelectedBook(null);
+    setSelectedBookName('');
     setSelectedChapter(null);
   };
 
@@ -54,6 +55,7 @@ export default function App() {
       ) : (
         <Verses
           version="nvi"
+          bookName={selectedBookName}
           bookAbbrev={selectedBook}
           chapter={selectedChapter}
           lastChapter={chapterCount}
